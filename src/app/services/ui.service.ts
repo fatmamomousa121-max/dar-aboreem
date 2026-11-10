@@ -28,10 +28,8 @@ export class UiService {
   private initialTheme(): Theme {
     let saved: string | null = null;
     try { saved = localStorage.getItem(THEME_KEY); } catch { /* storage unavailable */ }
-    if (saved === 'light' || saved === 'dark') {
-      this.doc.documentElement.dataset['theme'] = saved;
-      return saved;
-    }
-    return this.doc.defaultView?.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    const theme: Theme = saved === 'dark' ? 'dark' : 'light';
+    this.doc.documentElement.dataset['theme'] = theme;
+    return theme;
   }
 }

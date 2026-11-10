@@ -39,9 +39,6 @@
   color-scheme: dark;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) { @include dark-tokens; }
-}
 :root[data-theme="dark"] { @include dark-tokens; }
 
 * { box-sizing: border-box; }
