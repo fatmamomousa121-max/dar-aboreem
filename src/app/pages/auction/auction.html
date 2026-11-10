@@ -1,0 +1,84 @@
+<section class="block alt">
+  <app-khatam-pattern />
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="live">مزاد مباشر</div>
+        <h2>مزاد النوادر</h2>
+      </div>
+      <p>تُغلق كل قطعة عند انتهاء عدّادها. تُمدَّد المدة دقيقتين إذا وصلت مزايدة في آخر دقيقة.</p>
+    </div>
+
+    @let l = lot();
+    <div class="lot-main">
+      <div class="arch">
+        <app-misbaha [look]="l.look" [count]="l.beads" [label]="l.name" />
+        <span class="tag">قطعة {{ l.id }}</span>
+      </div>
+
+      <div class="info">
+        <div class="eyebrow">{{ l.era }}</div>
+        <h3>{{ l.name }}</h3>
+        <p class="desc">{{ l.description }}</p>
+
+        <dl class="specs">
+          <div><dt>الخامة</dt><dd>{{ l.material }}</dd></div>
+          <div><dt>الحبّات</dt><dd class="num">{{ l.beads | arNum }}</dd></div>
+          <div><dt>المقاس</dt><dd class="num">{{ l.sizeMm | arNum }} مم</dd></div>
+          <div><dt>الوزن</dt><dd class="num">{{ l.weightG | arNum }} غ</dd></div>
+        </dl>
+
+        <div class="stats">
+          <div class="stat"><small>{{ l.bids.length ? 'أعلى مزايدة' : 'سعر الافتتاح' }}</small><b class="num">{{ current() | sar }}</b></div>
+          <div class="stat"><small>ينتهي خلال</small><b class="num cd">{{ remaining() | countdown }}</b></div>
+        </div>
+
+        <form class="bidform" (submit)="submit($event)" novalidate>
+          <label for="bidAmt" class="sr-only">مبلغ المزايدة</label>
+          <input id="bidAmt" inputmode="numeric" autocomplete="off"
+                 [value]="amount()" (input)="amount.set($any($event.target).value)" [disabled]="ended()">
+          <button class="btn primary" type="submit" [disabled]="ended()">زايد</button>
+        </form>
+
+        <div class="quick">
+          @for (v of quickBids(); track $index) {
+            <button type="button" [disabled]="ended()" (click)="amount.set('' + v)">{{ v | sar }}</button>
+          }
+        </div>
+
+        @if (feedback(); as f) {
+          <div class="msg" [class.ok]="f.kind === 'ok'" [class.err]="f.kind === 'err'">{{ f.text }}</div>
+        } @else {
+          <div class="msg">أقل مزايدة مقبولة: <span class="num">{{ minNext() | sar }}</span> · الزيادة {{ step() | sar }}</div>
+        }
+
+        <ul class="history">
+          @for (b of l.bids; track b.at) {
+            <li [class.me]="b.mine">
+              <span class="who">{{ b.bidder }}</span>
+              <span class="num">{{ b.amount | sar }}</span>
+              <time>{{ b.at | ago: svc.now() }}</time>
+            </li>
+          } @empty {
+            <li class="none">لا توجد مزايدات بعد. كن أول من يزايد.</li>
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div class="lots">
+      @for (item of svc.lots(); track item.id) {
+        <a class="lot" [routerLink]="['/auction', item.id]" [attr.aria-current]="item.id === l.id ? 'true' : null">
+          <div class="thumb"><app-misbaha [look]="item.look" [count]="item.beads" [label]="item.name" /></div>
+          <div class="t">
+            <b>{{ item.name }}</b>
+            <span class="num">{{ svc.current(item) | sar }} · {{ item.bids.length | arNum }} مزايدة</span>
+            <span class="num cd">{{ svc.remaining(item) | countdown }}</span>
+          </div>
+        </a>
+      }
+    </div>
+
+    <p class="note">نسخة عرض: المزايدات تُحفظ في هذه الصفحة فقط ولا يُدفع أي مبلغ.</p>
+  </div>
+</section>

@@ -1,0 +1,52 @@
+<section class="hero">
+  <app-khatam-pattern />
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">سوق ومزاد السُّبَح النادرة</div>
+      <h1>كلُّ حبّةٍ <span>ذِكر</span></h1>
+      <p class="lead">
+        سُبَح من الكهرمان البلطيقي والفاتوران العتيق واليُسر والعود المعتّق.
+        تسوّق قطعًا موثّقة المنشأ، أو نافس على النوادر في مزادنا الأسبوعي.
+      </p>
+      <div class="ctas">
+        <a class="btn primary" routerLink="/market">تصفّح السوق</a>
+        <a class="btn ghost" routerLink="/auction">ادخل المزاد</a>
+      </div>
+    </div>
+    <app-tasbih />
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="ornament eyebrow">من السوق</div>
+        <h2>مختارات هذا الأسبوع</h2>
+      </div>
+      <a class="btn ghost" routerLink="/market">كل السُّبَح</a>
+    </div>
+    <div class="grid">
+      @for (p of featured(); track p.id) { <app-product-card [product]="p" /> }
+    </div>
+  </div>
+</section>
+
+@if (endingSoon(); as lot) {
+  <section class="block alt">
+    <app-khatam-pattern />
+    <div class="wrap teaser">
+      <div class="arch"><app-misbaha [look]="lot.look" [count]="lot.beads" [label]="lot.name" /></div>
+      <div class="teaser-info">
+        <div class="live">يُغلق قريبًا</div>
+        <h2>{{ lot.name }}</h2>
+        <p>{{ lot.description }}</p>
+        <div class="figures">
+          <div><small>أعلى مزايدة</small><b class="num">{{ auction.current(lot) | sar }}</b></div>
+          <div><small>ينتهي خلال</small><b class="num cd">{{ auction.remaining(lot) | countdown }}</b></div>
+        </div>
+        <a class="btn primary" [routerLink]="['/auction', lot.id]">زايد الآن</a>
+      </div>
+    </div>
+  </section>
+}

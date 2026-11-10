@@ -1,0 +1,20 @@
+.tasbih {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 200px 200px var(--r) var(--r);
+  padding: 34px 24px 22px;
+  text-align: center;
+}
+.beads {
+  display: block; width: 100%; max-width: 300px; margin-inline: auto;
+  background: none; border: 0; padding: 0; cursor: pointer;
+  &:disabled { cursor: default; }
+}
+.dhikr { font-family: var(--f-display); font-size: 1.9rem; line-height: 1.4; }
+.count { font-family: var(--f-kufi); color: var(--muted); font-size: .95rem; }
+.phases {
+  display: flex; justify-content: center; gap: 6px; margin-top: 8px;
+  i { width: 28px; height: 4px; border-radius: 2px; background: var(--line); }
+  i.on { background: var(--teal); }
+}
+.row { display: flex; justify-content: center; gap: 10px; margin-top: 12px; }

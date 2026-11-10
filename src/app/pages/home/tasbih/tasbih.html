@@ -1,0 +1,16 @@
+<div class="tasbih" aria-live="polite">
+  <button class="beads" type="button" (click)="tick()" [disabled]="finished()" aria-label="سبّح">
+    <app-misbaha [look]="look" [filled]="filled()" label="سبحة تفاعلية" />
+  </button>
+  <div class="dhikr">{{ phrase() }}</div>
+  <div class="count num">
+    @if (finished()) { تمّ الذكر · ٩٩ } @else { {{ filled() | arNum }} / ٣٣ }
+  </div>
+  <div class="phases" aria-hidden="true">
+    @for (p of phases; track p) { <i [class.on]="count() >= (p + 1) * 33"></i> }
+  </div>
+  <div class="row">
+    <button class="btn primary" type="button" (click)="tick()" [disabled]="finished()">سبّح</button>
+    <button class="btn ghost" type="button" (click)="reset()">من جديد</button>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<section class="block">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="ornament eyebrow">دليل الخامات</div>
+        <h2>اعرف سبحتك</h2>
+      </div>
+    </div>
+
+    <div class="materials">
+      @for (m of materials; track m.name) {
+        <article>
+          <div class="swatch" [style.background]="gradient(m.swatch)"></div>
+          <h3>{{ m.name }}</h3>
+          <p>{{ m.text }}</p>
+        </article>
+      }
+    </div>
+
+    <dl class="terms">
+      @for (t of terms; track t.term) {
+        <div><dt>{{ t.term }}</dt><dd>{{ t.text }}</dd></div>
+      }
+    </dl>
+  </div>
+</section>

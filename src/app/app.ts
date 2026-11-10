@@ -1,12 +1,14 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { CartDrawer } from './layout/cart-drawer/cart-drawer';
+import { Footer } from './layout/footer/footer';
+import { Header } from './layout/header/header';
+import { Toast } from './layout/toast/toast';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, Header, Footer, CartDrawer, Toast],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
 })
-export class App {
-  protected readonly title = signal('dar-alsubah');
-}
+export class App {}

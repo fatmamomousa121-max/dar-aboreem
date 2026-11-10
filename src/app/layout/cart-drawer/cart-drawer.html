@@ -1,0 +1,36 @@
+@if (cart.isOpen()) {
+  <div class="scrim" (click)="close()"></div>
+  <aside class="drawer" aria-label="السلة">
+    <header>
+      <h2>سلّتك</h2>
+      <button class="x" type="button" (click)="close()" aria-label="إغلاق">×</button>
+    </header>
+
+    <ul class="items">
+      @for (line of cart.lines(); track line.product.id) {
+        <li>
+          <div class="thumb">
+            <app-misbaha [look]="line.product.look" [count]="line.product.beads" [label]="line.product.name" />
+          </div>
+          <div>
+            <b>{{ line.product.name }}</b>
+            <div class="qty">
+              <button type="button" (click)="cart.change(line.product, -1)" aria-label="إنقاص">−</button>
+              <span class="num">{{ line.qty | arNum }}</span>
+              <button type="button" (click)="cart.change(line.product, 1)" aria-label="زيادة">+</button>
+            </div>
+          </div>
+          <span class="price num">{{ line.product.price * line.qty | sar }}</span>
+        </li>
+      } @empty {
+        <li class="empty">السلة فارغة. أضف سبحة من السوق.</li>
+      }
+    </ul>
+
+    <footer>
+      <div class="total"><span>المجموع</span><b class="num">{{ cart.total() | sar }}</b></div>
+      <button class="btn primary" type="button" [disabled]="cart.count() === 0" (click)="checkout()">إتمام الطلب</button>
+      <div class="msg ok">{{ note() }}</div>
+    </footer>
+  </aside>
+}

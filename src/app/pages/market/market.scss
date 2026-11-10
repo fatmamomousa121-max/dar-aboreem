@@ -1,0 +1,9 @@
+.toolbar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 24px; }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; }
+label {
+  margin-inline-start: auto; display: flex; align-items: center; gap: 8px;
+  font-family: var(--f-kufi); font-size: .9rem; color: var(--muted);
+}
+select { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 5px 10px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 22px; }
+.empty { color: var(--muted); grid-column: 1 / -1; }

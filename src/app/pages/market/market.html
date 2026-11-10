@@ -1,0 +1,36 @@
+<section class="block">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="ornament eyebrow">السوق</div>
+        <h2>سُبَح جاهزة للشحن</h2>
+      </div>
+      <p>كل سبحة تصلك مع شهادة خامة ووصف لعدد الحبّات ومقاسها بالمليمتر.</p>
+    </div>
+
+    <div class="toolbar">
+      <div class="chips" role="group" aria-label="الخامة">
+        @for (c of categories; track c.key) {
+          <button class="chip" type="button" [attr.aria-pressed]="category() === c.key" (click)="category.set(c.key)">
+            {{ c.label }}
+          </button>
+        }
+      </div>
+      <label for="sort">ترتيب
+        <select id="sort" [value]="sort()" (change)="setSort($any($event.target).value)">
+          <option value="featured">المختارة</option>
+          <option value="asc">السعر: من الأقل</option>
+          <option value="desc">السعر: من الأعلى</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="grid">
+      @for (p of visible(); track p.id) {
+        <app-product-card [product]="p" />
+      } @empty {
+        <p class="empty">لا توجد سُبَح من هذه الخامة حاليًا.</p>
+      }
+    </div>
+  </div>
+</section>
